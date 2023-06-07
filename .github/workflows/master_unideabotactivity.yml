@@ -39,4 +39,4 @@ jobs:
           app-name: 'unideaBotActivity'
           slot-name: 'Production'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4928FE7ABB374A02AD10AC1A0E287AE3 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5DA6C440C9F74A8E958CC371F8C25374 }}
