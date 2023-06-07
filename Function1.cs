@@ -27,6 +27,7 @@ namespace Unidea_Activity_Telegram_bot
         [FunctionName("Function1")]
         public async Task Run([TimerTrigger("0 0 10 * * 3")] TimerInfo myTimer, ILogger log)
         {
+            log.LogDebug($"v1");
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
             logger = log;
             var _botClient = GetTelegramBotClient();
@@ -39,19 +40,19 @@ namespace Unidea_Activity_Telegram_bot
 
 
 
-        [FunctionName("FunctionProva")]
-        public async Task RunProva([TimerTrigger("1 * * * * *")] TimerInfo myTimer, ILogger log)
-        {
-            logger = log;
-            var _botClient = GetTelegramBotClient();
+        //[FunctionName("FunctionProva")]
+        //public async Task RunProva([TimerTrigger("1 * * * * *")] TimerInfo myTimer, ILogger log)
+        //{
+        //    logger = log;
+        //    var _botClient = GetTelegramBotClient();
 
 
-            var msg = await this.ComposeMessage();
+        //    var msg = await this.ComposeMessage();
 
-            await _botClient.SendPhotoAsync(CHAT_ID_demo, InputFile.FromUri(msg.displayImage), caption: msg.Caption);
+        //    await _botClient.SendPhotoAsync(CHAT_ID_demo, InputFile.FromUri(msg.displayImage), caption: msg.Caption);
 
-            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
-        }
+        //    log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+        //}
 
 
         public async Task<MessageContent> ComposeMessage()
