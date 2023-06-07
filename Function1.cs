@@ -21,18 +21,20 @@ namespace Unidea_Activity_Telegram_bot
         private HttpClient httpClient;
         private const string IG_BASE_URL = "https://www.instagram.com/api/v1/";
         private const string CHAT_ID = "-1001714171921";
-
+        private const string CHAT_ID_demo = "-1001714171921";
+        ILogger logger;
 
         [FunctionName("Function1")]
         public async Task Run([TimerTrigger("0 0 10 * * 3")] TimerInfo myTimer, ILogger log)
         {
+            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+            logger = log;
             var _botClient = GetTelegramBotClient();
 
             var msg = await this.ComposeMessage();
 
             await _botClient.SendPhotoAsync(CHAT_ID, InputFile.FromUri(msg.displayImage), caption: msg.Caption);
 
-            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
         }
 
 
@@ -45,7 +47,7 @@ namespace Unidea_Activity_Telegram_bot
 
         //    var msg = await this.ComposeMessage();
 
-        //    await _botClient.SendPhotoAsync(CHAT_ID, InputFile.FromUri(msg.displayImage), caption: msg.Caption);
+        //    await _botClient.SendPhotoAsync(CHAT_ID_demo, InputFile.FromUri(msg.displayImage), caption: msg.Caption);
 
         //    log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
         //}
@@ -53,7 +55,9 @@ namespace Unidea_Activity_Telegram_bot
 
         public async Task<MessageContent> ComposeMessage()
         {
+
             var userinfo = await this.GetProfileAsync("unidea_tn");
+
 
             List<Edge> feed = userinfo.data.user.edge_owner_to_timeline_media.edges;
 
@@ -87,10 +91,13 @@ namespace Unidea_Activity_Telegram_bot
             {
                 response.EnsureSuccessStatusCode();
                 string? json = response.Content.ReadAsStringAsync().Result;
+                logger.LogInformation(json);
                 return JsonSerializer.Deserialize<T>(json);
             }
             catch (Exception ex)
             {
+                logger.LogError(ex.Message);
+                logger.LogError(ex.InnerException.Message);
                 throw;
             }
 
