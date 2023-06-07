@@ -77,6 +77,10 @@ namespace Unidea_Activity_Telegram_bot
         {
             userAgent = new ProductInfoHeaderValue("(Instagram 219.0.0.12.117 Android)");
             httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue
+            {
+                NoCache = true
+            };
             var url = BuildUrl($"users/web_profile_info/?username={username}");
             return await this.GetResponseAsync<WebProfileInfoViewModel>(url);
         }
