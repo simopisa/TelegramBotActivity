@@ -27,7 +27,7 @@ namespace Unidea_Activity_Telegram_bot
         [FunctionName("Function1")]
         public async Task Run([TimerTrigger("0 0 10 * * 3")] TimerInfo myTimer, ILogger log)
         {
-            log.LogDebug($"v1");
+            log.LogInformation($"v1");
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
             logger = log;
             var _botClient = GetTelegramBotClient();
