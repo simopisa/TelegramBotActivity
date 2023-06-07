@@ -18,10 +18,10 @@ namespace Unidea_Activity_Telegram_bot
     {
 
         private ProductInfoHeaderValue userAgent;
-        private HttpClient httpClient;
+        private HttpClient httpClient = HttpClientFactory.Create();
         private const string IG_BASE_URL = "https://www.instagram.com/api/v1/";
         private const string CHAT_ID = "-1001714171921";
-        private const string CHAT_ID_demo = "-1001714171921";
+        private const string CHAT_ID_demo = "-1001982336248";
         ILogger logger;
 
         [FunctionName("Function1")]
@@ -39,18 +39,19 @@ namespace Unidea_Activity_Telegram_bot
 
 
 
-        //[FunctionName("FunctionProva")]
-        //public async Task RunProva([TimerTrigger("1 * * * * *")] TimerInfo myTimer, ILogger log)
-        //{
-        //    var _botClient = GetTelegramBotClient();
+        [FunctionName("FunctionProva")]
+        public async Task RunProva([TimerTrigger("1 * * * * *")] TimerInfo myTimer, ILogger log)
+        {
+            logger = log;
+            var _botClient = GetTelegramBotClient();
 
 
-        //    var msg = await this.ComposeMessage();
+            var msg = await this.ComposeMessage();
 
-        //    await _botClient.SendPhotoAsync(CHAT_ID_demo, InputFile.FromUri(msg.displayImage), caption: msg.Caption);
+            await _botClient.SendPhotoAsync(CHAT_ID_demo, InputFile.FromUri(msg.displayImage), caption: msg.Caption);
 
-        //    log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
-        //}
+            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+        }
 
 
         public async Task<MessageContent> ComposeMessage()
@@ -76,7 +77,7 @@ namespace Unidea_Activity_Telegram_bot
         public async Task<WebProfileInfoViewModel?> GetProfileAsync(string username)
         {
             userAgent = new ProductInfoHeaderValue("(Instagram 219.0.0.12.117 Android)");
-            httpClient = new HttpClient();
+
             httpClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue
             {
                 NoCache = true
